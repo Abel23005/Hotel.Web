@@ -1,0 +1,8 @@
+@model Habitacion
+@{ ViewData["Title"] = "Editar habitación"; }
+<a asp-action="Index" class="back-link"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Volver a habitaciones</a>
+<div class="page-header"><div><span class="section-kicker">CUIDA CADA DETALLE</span><h1>Editar habitación @Model.Numero</h1><p>Mantén actualizados los datos y la tarifa de este espacio.</p></div></div>
+<div class="form-layout">
+    <form asp-action="Edit" asp-route-id="@Model.IdHabitacion" method="post" class="panel form-panel"><input asp-for="IdHabitacion" type="hidden" /><partial name="_Formulario" model="Model" /></form>
+    <aside class="form-help"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><h2>Información al día,<br />mejor atención.</h2><p>Revisa los cambios antes de guardar. El número de habitación debe seguir siendo único.</p><p class="help-divider">Los totales de las reservas se calculan con la tarifa actual. Un cambio de precio también se reflejará en esos importes.</p></aside>
+</div>

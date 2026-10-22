@@ -1,0 +1,8 @@
+@model Habitacion
+@{ ViewData["Title"] = "Nueva habitación"; }
+<a asp-action="Index" class="back-link"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Volver a habitaciones</a>
+<div class="page-header"><div><span class="section-kicker">AMPLÍA TUS ESPACIOS</span><h1>Nueva habitación</h1><p>Un nuevo espacio para que tus huéspedes se sientan en casa.</p></div></div>
+<div class="form-layout">
+    <form asp-action="Create" method="post" class="panel form-panel"><partial name="_Formulario" model="Model" /></form>
+    <aside class="form-help"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg><h2>Los detalles hacen<br />la diferencia.</h2><p>Un registro claro te ayuda a organizar cada habitación y ofrecer la opción adecuada a cada huésped.</p><ul><li>El número debe ser único.</li><li>Elige el tipo que corresponda al espacio.</li><li>La tarifa se aplica por cada noche.</li></ul><p class="help-divider">La habitación quedará activa al guardarla y podrá aparecer en las búsquedas de disponibilidad.</p></aside>
+</div>

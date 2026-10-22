@@ -1,0 +1,33 @@
+# Visual Studio y archivos de usuario
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Compilacion y paquetes generados
+**/bin/
+**/obj/
+**/TestResults/
+**/publish/
+*.nupkg
+
+# Datos, configuracion local y credenciales
+*.mdf
+*.ldf
+*.bak
+*.pfx
+*.p12
+*.key
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+
+# Archivos temporales
+*.log
+*.tmp
+Thumbs.db
+.DS_Store

@@ -1,0 +1,30 @@
+@model List<Reserva>
+@{ ViewData["Title"] = "Reservas"; var pendientes = Model.Count(r => r.Estado == "Pendiente"); var confirmadas = Model.Count(r => r.Estado == "Confirmada"); }
+<div class="page-header"><div><span class="section-kicker">CADA ESTADÍA, EN SU LUGAR</span><h1>Reservas</h1><p>Acompaña cada visita, desde la reserva hasta la despedida.</p></div><a asp-action="Create" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nueva reserva</a></div>
+<div class="metrics" aria-label="Resumen de reservas">
+    <div class="metric"><span class="metric-label">Reservas registradas</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><strong class="metric-value">@Model.Count.ToString("D2")</strong><span class="metric-note">Historial completo</span></div>
+    <div class="metric"><span class="metric-label">Pendientes</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span><strong class="metric-value">@pendientes.ToString("D2")</strong><span class="metric-note">Por confirmar</span></div>
+    <div class="metric"><span class="metric-label">Confirmadas</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><strong class="metric-value">@confirmadas.ToString("D2")</strong><span class="metric-note">Estadías confirmadas</span></div>
+</div>
+<section class="panel" aria-labelledby="reservas-titulo">
+    <div class="panel-heading"><div><h2 id="reservas-titulo">Registro de reservas <span class="count-tag">@Model.Count</span></h2><p>Fechas, huéspedes y estado de cada estadía.</p></div></div>
+    @if (Model.Count > 0) {
+    <p class="mobile-table-hint">Desliza la tabla para ver todos los datos y acciones →</p><div class="table-responsive" tabindex="0" role="region" aria-label="Tabla con desplazamiento horizontal"><table class="table reservation-table align-middle">
+    <thead><tr><th scope="col">Reserva</th><th scope="col">Huésped</th><th scope="col">Habitación</th><th scope="col">Estadía</th><th scope="col">Estado</th><th scope="col">Total</th><th scope="col">Observaciones</th><th scope="col">Acciones</th></tr></thead>
+    <tbody>@foreach (var r in Model) {
+        var noches = r.FechaSalida.DayNumber - r.FechaIngreso.DayNumber;
+        var total = noches * r.IdHabitacionNavigation.PrecioPorNoche;
+        var statusClass = r.Estado switch { "Pendiente" => "status-pending", "Cancelada" => "status-cancelled", "Confirmada" => "status-confirmed", _ => "" };
+        <tr><td><span class="reservation-code">#@r.IdReserva.ToString("D4")</span></td><td class="guest-name">@r.IdHuespedNavigation.Nombres</td><td><span class="type-tag">@r.IdHabitacionNavigation.Numero</span></td>
+        <td class="date-cell">@r.FechaIngreso.ToString("dd/MM/yyyy")<span class="cell-subtitle">Hasta @r.FechaSalida.ToString("dd/MM/yyyy") · @noches noche(s)</span></td>
+        <td><span class="status-pill @statusClass">@r.Estado</span></td><td class="money">@total.ToString("N2")</td><td class="observations">@(string.IsNullOrWhiteSpace(r.Observaciones) ? "—" : r.Observaciones)</td><td>
+        @if (r.Estado is "Pendiente" or "Confirmada") {
+            <form asp-action="Cancelar" asp-route-id="@r.IdReserva" method="post"><button class="btn btn-sm btn-outline-danger" aria-label="Cancelar reserva @r.IdReserva">Cancelar</button></form>
+        } else { <span class="cell-subtitle">Sin acciones</span> }
+        </td></tr>
+    }</tbody></table></div>
+    } else {
+        <div class="empty-state"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><h3>Tu próxima estadía comienza aquí</h3><p>Aún no hay reservas. Consulta la disponibilidad y registra la primera bienvenida.</p><a asp-action="Disponibles" class="btn btn-outline-primary">Consultar disponibilidad<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    }
+    <div class="panel-footer"><span>El total utiliza la tarifa actual de la habitación.</span><span>Solo se cancelan reservas pendientes o confirmadas.</span></div>
+</section>

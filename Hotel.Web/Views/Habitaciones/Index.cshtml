@@ -1,0 +1,31 @@
+@model List<Habitacion>
+@{ ViewData["Title"] = "Habitaciones"; var tipos = Model.Select(h => h.IdTipoHabitacion).Distinct().Count(); }
+<div class="page-header">
+    <div><span class="section-kicker">ESPACIOS PARA DESCANSAR</span><h1>Habitaciones</h1><p>Organiza tus espacios y prepara la próxima bienvenida.</p></div>
+    <a asp-action="Create" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nueva habitación</a>
+</div>
+<div class="metrics" aria-label="Resumen de las habitaciones mostradas">
+    <div class="metric"><span class="metric-label">Habitaciones activas</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg></span><strong class="metric-value">@Model.Count.ToString("D2")</strong><span class="metric-note">En la selección actual</span></div>
+    <div class="metric"><span class="metric-label">Tipos de habitación</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><strong class="metric-value">@tipos.ToString("D2")</strong><span class="metric-note">Opciones para cada estadía</span></div>
+    <div class="metric"><span class="metric-label">Tarifa desde</span><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span><strong class="metric-value">@(Model.Count > 0 ? Model.Min(h => h.PrecioPorNoche).ToString("N2") : "—")</strong><span class="metric-note">Por habitación y por noche</span></div>
+</div>
+<section class="panel" aria-labelledby="lista-titulo">
+    <div class="panel-heading"><div><h2 id="lista-titulo">Tus habitaciones <span class="count-tag">@Model.Count</span></h2><p>Consulta tarifas, tipos y detalles de cada espacio.</p></div><span class="status-pill">Activas</span></div>
+    <form method="get" class="filter-bar">
+        <div class="filter-field"><label for="tipo" class="form-label">Tipo de habitación</label><select id="tipo" name="tipo" asp-items="ViewBag.Tipos" class="form-select"><option value="">Todos los tipos</option></select></div>
+        <button class="btn btn-outline-primary"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>Filtrar</button><a asp-action="Index" class="btn btn-link">Limpiar</a>
+    </form>
+    @if (Model.Count > 0) {
+    <p class="mobile-table-hint">Desliza la tabla para ver todos los datos y acciones →</p><div class="table-responsive" tabindex="0" role="region" aria-label="Tabla con desplazamiento horizontal"><table class="table align-middle">
+        <thead><tr><th scope="col">Habitación</th><th scope="col">Tipo</th><th scope="col">Tarifa por noche</th><th scope="col">Acciones</th></tr></thead>
+        <tbody>@foreach (var h in Model) {
+            <tr><td><div class="room-cell"><span class="room-glyph"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg></span><span><span class="room-number">@h.Numero</span><span class="cell-subtitle">Habitación</span></span></div></td>
+                <td><span class="type-tag">@h.IdTipoHabitacionNavigation.Nombre</span></td><td class="money">@h.PrecioPorNoche.ToString("N2")<small>/ noche</small></td>
+                <td><div class="row-actions"><a asp-action="Details" asp-route-id="@h.IdHabitacion" aria-label="Ver detalles de la habitación @h.Numero">Detalles</a><a asp-action="Edit" asp-route-id="@h.IdHabitacion" aria-label="Editar habitación @h.Numero">Editar</a><a asp-action="Delete" asp-route-id="@h.IdHabitacion" class="danger-link" aria-label="Desactivar habitación @h.Numero">Desactivar</a></div></td></tr>
+        }</tbody>
+    </table></div>
+    } else {
+        <div class="empty-state"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg><h3>No encontramos habitaciones</h3><p>Prueba con otro tipo o registra una nueva habitación para comenzar.</p><a asp-action="Create" class="btn btn-outline-primary">Crear habitación</a></div>
+    }
+    <div class="panel-footer"><span>@Model.Count habitaciones en esta selección</span><span>Ordenadas por número de habitación</span></div>
+</section>

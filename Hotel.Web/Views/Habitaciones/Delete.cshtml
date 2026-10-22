@@ -1,0 +1,8 @@
+@model Habitacion
+@{ ViewData["Title"] = "Desactivar habitación"; }
+<a asp-action="Index" class="back-link"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Volver a habitaciones</a>
+<div class="page-header"><div><span class="section-kicker">ADMINISTRACIÓN DE ESPACIOS</span><h1>Desactivar habitación</h1><p>Revisa la información antes de confirmar el cambio.</p></div></div>
+<section class="panel delete-panel"><h2>Habitación @Model.Numero</h2><p>@Model.IdTipoHabitacionNavigation.Nombre · @Model.PrecioPorNoche.ToString("N2") por noche</p>
+<div class="warning-note"><p>Esta habitación dejará de aparecer en las consultas de disponibilidad y no podrá recibir nuevas reservas.</p><p class="mb-0">Sus datos y las reservas ya registradas se conservarán.</p></div>
+<form asp-action="Delete" asp-route-id="@Model.IdHabitacion" method="post" class="form-actions"><button class="btn btn-danger">Confirmar desactivación</button><a asp-action="Index" class="btn btn-outline-secondary">Volver</a></form>
+</section>

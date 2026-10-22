@@ -1,0 +1,30 @@
+@model List<Habitacion>
+@{ ViewData["Title"] = "Disponibilidad"; DateOnly? ingreso = ViewBag.Ingreso; DateOnly? salida = ViewBag.Salida; }
+<div class="page-header"><div><span class="section-kicker">ENCUENTRA LA ESTADÍA IDEAL</span><h1>Disponibilidad</h1><p>Elige las fechas y descubre qué habitaciones están listas para recibir.</p></div></div>
+<section class="panel search-panel" aria-label="Buscar habitaciones disponibles">
+    <form method="get" class="search-form">
+        <div><label for="ingreso" class="form-label">Fecha de ingreso</label><input id="ingreso" name="ingreso" type="date" value="@(ingreso?.ToString("yyyy-MM-dd"))" class="form-control" required /></div>
+        <div><label for="salida" class="form-label">Fecha de salida</label><input id="salida" name="salida" type="date" value="@(salida?.ToString("yyyy-MM-dd"))" class="form-control" required /></div>
+        <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>Buscar habitaciones</button>
+    </form>
+</section>
+<div asp-validation-summary="All" role="alert"></div>
+@if (ViewBag.Busqueda == true) {
+    <div class="result-heading"><h2>@Model.Count habitaciones disponibles</h2><p>@ingreso?.ToString("dd/MM/yyyy") — @salida?.ToString("dd/MM/yyyy") · @ViewBag.Noches noche(s)</p></div>
+    <section class="panel" aria-label="Resultados de disponibilidad">
+    @if (Model.Count > 0) {
+        <p class="mobile-table-hint">Desliza la tabla para ver todos los datos y acciones →</p><div class="table-responsive" tabindex="0" role="region" aria-label="Tabla con desplazamiento horizontal"><table class="table align-middle">
+        <thead><tr><th scope="col">Habitación</th><th scope="col">Tipo</th><th scope="col">Tarifa / noche</th><th scope="col">Total estimado</th><th scope="col">Reserva</th></tr></thead>
+        <tbody>@foreach (var h in Model) {
+            decimal total = h.PrecioPorNoche * (int)ViewBag.Noches;
+            <tr><td><div class="room-cell"><span class="room-glyph"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg></span><span><span class="room-number">@h.Numero</span><span class="cell-subtitle">Disponible</span></span></div></td><td><span class="type-tag">@h.IdTipoHabitacionNavigation.Nombre</span></td><td class="money">@h.PrecioPorNoche.ToString("N2")</td><td class="money">@total.ToString("N2")<span class="cell-subtitle">@ViewBag.Noches noche(s)</span></td><td>
+            <a asp-action="Create" asp-route-habitacion="@h.IdHabitacion" asp-route-ingreso="@(ingreso?.ToString("yyyy-MM-dd"))" asp-route-salida="@(salida?.ToString("yyyy-MM-dd"))" class="btn btn-sm btn-outline-primary">Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></td></tr>
+        }</tbody></table></div>
+    } else {
+        <div class="empty-state"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><h3>Sin habitaciones para estas fechas</h3><p>Prueba con otro rango de fechas para encontrar una estadía disponible.</p></div>
+    }
+    <div class="panel-footer"><span>Importes estimados para el rango seleccionado.</span><span>Disponibilidad sujeta a nuevas reservas.</span></div>
+    </section>
+} else {
+    <div class="search-idle"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><div><h2>Una nueva bienvenida está por llegar</h2><p>Selecciona el ingreso y la salida. Verás las habitaciones libres, las noches de estadía y el total estimado en un solo lugar.</p></div></div>
+}

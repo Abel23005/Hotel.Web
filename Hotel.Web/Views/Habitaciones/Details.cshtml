@@ -1,0 +1,9 @@
+@model Habitacion
+@{ ViewData["Title"] = "Detalle de habitación"; }
+<a asp-action="Index" class="back-link"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Volver a habitaciones</a>
+<div class="page-header"><div><span class="section-kicker">CONOCE CADA ESPACIO</span><h1>Habitación @Model.Numero</h1><p>Información y tarifa de esta habitación.</p></div></div>
+<section class="panel detail-panel" aria-label="Detalle de la habitación">
+<div class="detail-hero"><span class="room-glyph"><svg class="icon" aria-hidden="true"><use href="#i-bed"/></svg></span><div><h2>Habitación @Model.Numero</h2><span class="status-pill">Activa</span></div></div>
+<dl class="detail-list"><div><dt>Tipo de habitación</dt><dd>@Model.IdTipoHabitacionNavigation.Nombre</dd></div><div><dt>Tarifa por noche</dt><dd>@Model.PrecioPorNoche.ToString("N2")</dd></div><div><dt>Número de habitación</dt><dd>@Model.Numero</dd></div></dl>
+<div class="detail-actions"><a asp-action="Edit" asp-route-id="@Model.IdHabitacion" class="btn btn-primary">Editar habitación</a><a asp-controller="Reservas" asp-action="Disponibles" class="btn btn-outline-secondary">Ver disponibilidad</a></div>
+</section>

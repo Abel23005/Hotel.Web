@@ -1,0 +1,16 @@
+@model Reserva
+@{ ViewData["Title"] = "Nueva reserva"; }
+<a asp-action="Index" class="back-link"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Volver a reservas</a>
+<div class="page-header"><div><span class="section-kicker">PREPARA UNA NUEVA BIENVENIDA</span><h1>Nueva reserva</h1><p>Conecta al huésped con su próxima estadía.</p></div><span class="status-pill status-pending">Se creará como Pendiente</span></div>
+<div class="form-layout">
+<form asp-action="Create" method="post" class="panel form-panel">
+    <div asp-validation-summary="ModelOnly" role="alert"></div>
+    <h2 class="form-section-title">Datos de la estadía</h2><p class="form-intro">Selecciona un huésped, una habitación y las fechas de su visita.</p>
+    <div class="field"><label asp-for="IdHuesped" class="form-label">Huésped</label><select asp-for="IdHuesped" asp-items="ViewBag.Huespedes" class="form-select" required><option value="">Selecciona un huésped</option></select><span asp-validation-for="IdHuesped"></span></div>
+    <div class="field"><label asp-for="IdHabitacion" class="form-label">Habitación</label><select asp-for="IdHabitacion" asp-items="ViewBag.Habitaciones" class="form-select" required><option value="">Selecciona una habitación</option></select><span asp-validation-for="IdHabitacion"></span></div>
+    <div class="field-grid"><div class="field"><label asp-for="FechaIngreso" class="form-label">Fecha de ingreso</label><input asp-for="FechaIngreso" type="date" class="form-control" required /><span asp-validation-for="FechaIngreso"></span></div><div class="field"><label asp-for="FechaSalida" class="form-label">Fecha de salida</label><input asp-for="FechaSalida" type="date" class="form-control" required /><span asp-validation-for="FechaSalida"></span></div></div>
+    <div class="field"><label asp-for="Observaciones" class="form-label">Observaciones <span class="optional-label">· opcional</span></label><textarea asp-for="Observaciones" maxlength="200" rows="3" class="form-control" placeholder="Algún detalle para preparar su llegada…"></textarea><span asp-validation-for="Observaciones"></span><div class="form-text">Hasta 200 caracteres para los detalles de esta estadía.</div></div>
+    <div class="form-actions"><button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Registrar reserva</button><a asp-action="Index" class="btn btn-outline-secondary">Volver</a></div>
+</form>
+<aside class="form-help"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><h2>Una estadía bien<br />organizada empieza aquí.</h2><p>Comprobaremos que la habitación esté libre durante todo el rango seleccionado.</p><ul><li>El ingreso puede ser hoy o una fecha futura.</li><li>La salida debe ser posterior al ingreso.</li><li>Solo se muestran huéspedes y habitaciones activos.</li></ul><p class="help-divider">¿Todavía no elegiste una habitación?<br /><a asp-action="Disponibles">Consultar disponibilidad →</a></p></aside>
+</div>

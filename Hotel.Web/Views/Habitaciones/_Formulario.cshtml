@@ -1,0 +1,14 @@
+@model Habitacion
+<div asp-validation-summary="ModelOnly" role="alert"></div>
+<h2 class="form-section-title">Información de la habitación</h2>
+<p class="form-intro">Completa los datos para identificar el espacio y su tarifa.</p>
+<div class="field"><label asp-for="Numero" class="form-label">Número de habitación</label>
+<input asp-for="Numero" class="form-control" maxlength="10" placeholder="Ej. 101" required />
+<span asp-validation-for="Numero"></span><div class="form-text">Un identificador único, de hasta 10 caracteres.</div></div>
+<div class="field"><label asp-for="IdTipoHabitacion" class="form-label">Tipo de habitación</label>
+<select asp-for="IdTipoHabitacion" asp-items="ViewBag.Tipos" class="form-select" required><option value="">Selecciona un tipo</option></select>
+<span asp-validation-for="IdTipoHabitacion"></span></div>
+<div class="field"><label asp-for="PrecioPorNoche" class="form-label">Tarifa por noche</label>
+<input asp-for="PrecioPorNoche" type="number" min="0.01" max="99999999.99" step="0.01" class="form-control" required />
+<span asp-validation-for="PrecioPorNoche"></span><div class="form-text">Ingresa el importe con hasta dos decimales.</div></div>
+<div class="form-actions"><button type="submit" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Guardar habitación</button><a asp-action="Index" class="btn btn-outline-secondary">Volver</a></div>
