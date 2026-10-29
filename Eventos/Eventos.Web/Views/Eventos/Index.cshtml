@@ -1,0 +1,7 @@
+@model IEnumerable<EventoListado>
+@{ ViewData["Title"] = "Eventos"; }
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1>Eventos</h1><p class="text-muted">Consulta, filtra y administra los eventos activos.</p></div><a class="btn btn-primary" asp-action="Create">Nuevo evento</a></div>
+<form method="get" class="row g-2 mb-3"><div class="col-md-4"><label class="form-label" for="categoriaId">Categoría</label><select class="form-select" id="categoriaId" name="categoriaId" asp-items="ViewBag.Categorias"><option value="">Todas las categorías</option></select></div><div class="col-auto align-self-end"><button class="btn btn-outline-primary">Filtrar</button></div></form>
+<div class="table-responsive"><table class="table table-striped align-middle"><thead><tr><th>Título</th><th>Fecha</th><th>Categoría</th><th>Modalidad</th><th>Inscritos</th><th>Cupos</th><th></th></tr></thead><tbody>
+@foreach (var item in Model) { <tr><td>@item.Evento.Titulo</td><td>@item.Evento.Fecha.ToString("dd/MM/yyyy HH:mm")</td><td>@item.Evento.Categoria?.Nombre</td><td>@item.Evento.Modalidad</td><td>@item.InscritosConfirmados</td><td>@item.CuposDisponibles</td><td class="text-nowrap"><a asp-action="Details" asp-route-id="@item.Evento.Id">Ver</a> · <a asp-action="Edit" asp-route-id="@item.Evento.Id">Editar</a> · <a asp-action="Delete" asp-route-id="@item.Evento.Id">Desactivar</a></td></tr> }
+</tbody></table></div>

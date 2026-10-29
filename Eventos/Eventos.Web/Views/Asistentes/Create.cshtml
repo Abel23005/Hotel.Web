@@ -1,0 +1,10 @@
+@model Asistente
+@{ ViewData["Title"] = "Nuevo asistente"; }
+<h1>Nuevo asistente</h1><form asp-action="Create" method="post" class="row g-3"><div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-6"><label asp-for="Nombres" class="form-label"></label><input asp-for="Nombres" class="form-control"/><span asp-validation-for="Nombres" class="text-danger"></span></div>
+    <div class="col-md-6"><label asp-for="Dni" class="form-label"></label><input asp-for="Dni" class="form-control"/><span asp-validation-for="Dni" class="text-danger"></span></div>
+    <div class="col-md-6"><label asp-for="Correo" class="form-label"></label><input asp-for="Correo" class="form-control"/><span asp-validation-for="Correo" class="text-danger"></span></div>
+    <div class="col-md-6"><label asp-for="Telefono" class="form-label"></label><input asp-for="Telefono" class="form-control"/><span asp-validation-for="Telefono" class="text-danger"></span></div>
+    <div class="col-12"><button class="btn btn-primary">Guardar</button> <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a></div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

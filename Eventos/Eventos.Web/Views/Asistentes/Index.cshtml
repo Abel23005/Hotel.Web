@@ -1,0 +1,4 @@
+@model IEnumerable<Asistente>
+@{ ViewData["Title"] = "Asistentes"; }
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1>Asistentes</h1><p class="text-muted">Personas activas registradas en el sistema.</p></div><a class="btn btn-primary" asp-action="Create">Nuevo asistente</a></div>
+<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Nombres</th><th>DNI</th><th>Correo</th><th>Teléfono</th></tr></thead><tbody>@foreach (var a in Model) { <tr><td>@a.Nombres</td><td>@a.Dni</td><td>@a.Correo</td><td>@a.Telefono</td></tr> }</tbody></table></div>

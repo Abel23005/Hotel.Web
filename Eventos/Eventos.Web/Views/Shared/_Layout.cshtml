@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · Eventos.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="container">
+    <a class="navbar-brand" asp-controller="Eventos" asp-action="Index">Eventos.Web</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="menu"><ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" asp-controller="Eventos" asp-action="Index">Eventos</a></li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Asistentes" asp-action="Index">Asistentes</a></li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Inscripciones" asp-action="Index">Inscripciones</a></li>
+    </ul></div>
+</div></nav></header>
+<main class="container py-4">
+    @if (TempData["Mensaje"] is string mensaje) { <div class="alert alert-success" role="status">@mensaje</div> }
+    @RenderBody()
+</main>
+<footer class="border-top py-3"><div class="container text-muted">Gestión de eventos e inscripciones · EF Core Code First</div></footer>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,3 @@
+@model Evento
+@{ ViewData["Title"] = "Desactivar evento"; }
+<h1>Desactivar evento</h1><p>¿Deseas desactivar <strong>@Model.Titulo</strong>? El evento dejará de aparecer como activo.</p><form asp-action="Delete" method="post"><input type="hidden" asp-for="Id"/><button class="btn btn-danger">Desactivar</button> <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a></form>

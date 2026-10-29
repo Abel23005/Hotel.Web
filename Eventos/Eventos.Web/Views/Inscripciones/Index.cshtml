@@ -1,0 +1,4 @@
+@model IEnumerable<Inscripcion>
+@{ ViewData["Title"] = "Inscripciones"; }
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1>Inscripciones</h1><p class="text-muted">Inscripciones confirmadas y canceladas.</p></div><a class="btn btn-primary" asp-action="Create">Nueva inscripción</a></div>
+<div class="table-responsive"><table class="table table-striped align-middle"><thead><tr><th>Evento</th><th>Asistente</th><th>Fecha de inscripción</th><th>Estado</th><th></th></tr></thead><tbody>@foreach (var i in Model) { <tr><td>@i.Evento?.Titulo</td><td>@i.Asistente?.Nombres</td><td>@i.FechaInscripcion.ToString("dd/MM/yyyy HH:mm")</td><td>@i.Estado</td><td>@if (i.Estado == "Confirmada") { <form asp-action="Cancelar" method="post"><input type="hidden" name="id" value="@i.Id"/><button class="btn btn-sm btn-outline-danger">Cancelar inscripción</button></form> }</td></tr> }</tbody></table></div>

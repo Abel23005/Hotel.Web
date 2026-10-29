@@ -1,0 +1,7 @@
+@model Inscripcion
+@{ ViewData["Title"] = "Nueva inscripción"; }
+<h1>Nueva inscripción</h1><form asp-action="Create" method="post" class="row g-3"><div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-6"><label asp-for="EventoId" class="form-label">Evento</label><select asp-for="EventoId" asp-items="ViewBag.EventoId" class="form-select"><option value="">Selecciona un evento</option></select><span asp-validation-for="EventoId" class="text-danger"></span></div>
+    <div class="col-md-6"><label asp-for="AsistenteId" class="form-label">Asistente</label><select asp-for="AsistenteId" asp-items="ViewBag.AsistenteId" class="form-select"><option value="">Selecciona un asistente</option></select><span asp-validation-for="AsistenteId" class="text-danger"></span></div>
+    <div class="col-12"><button class="btn btn-primary">Confirmar inscripción</button> <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a></div>
+</form>
